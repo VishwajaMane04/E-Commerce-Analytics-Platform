@@ -37,152 +37,33 @@ What patterns can be identified across e-commerce and marketing data?
 
 The goal of this project is to transform these fragmented datasets into a centralised, structured analytical platform that supports business reporting and decision-making.
 
-## Architecture
+## 🏗️ Architecture & Data Pipeline
 
 <img width="1692" height="603" alt="Data pipeline" src="https://github.com/user-attachments/assets/020a2fbe-5e34-4d7e-a6ce-05140e2a9cb3" />
 
 
-**Flow in one sentence:** raw CSVs land in S3 → Snowflake ingests them via an external stage → dbt transforms them through three layers (staging → intermediate → marts) → Power BI connects to the marts and serves four executive-facing reports.
+The platform follows a cloud ELT architecture — data is loaded first, then transformed inside the warehouse, keeping storage, transformation, and consumption cleanly separated.
 
-### Architecture at a Glance
 
-| Layer          | Technology     | Responsibility                        |
-| -------------- | -------------- | ------------------------------------- |
-| Source         | Olist datasets | Raw e-commerce and marketing data     |
-| Storage        | Amazon S3      | Cloud-based raw data storage          |
-| Warehouse      | Snowflake      | Central analytical data warehouse     |
-| Transformation | dbt            | SQL transformation and data modelling |
-| Analytics      | Power BI       | Business intelligence and reporting   |
+| Layer | Technology | Responsibility |
+|---|---|---|
+| Source | Olist datasets | Raw e-commerce and marketing data |
+| Storage | Amazon S3 | Cloud-based raw data storage |
+| Warehouse | Snowflake | Central analytical data warehouse |
+| Transformation | dbt | SQL transformation and data modelling |
+| Analytics | Power BI | Business intelligence and reporting |
 
----
+### dbt Transformation Layers
 
-# 🔄 Data Pipeline
-
-The pipeline follows a **cloud ELT architecture**, separating data storage, transformation, and consumption.
-
-## 1. Raw Data — Amazon S3
-
-The project begins with **11 CSV files** containing Olist e-commerce and marketing data.
-
-The source files are stored in Amazon S3, providing a central cloud-based landing layer for the raw data.
-
-The raw data is preserved before analytical transformations are applied.
-
-```text
-Olist CSV Files
-      │
-      ▼
-Amazon S3
-      │
-      ▼
-Raw Data
-```
+- **Staging** — 1:1 with source tables. Standardises column names, casts data types, cleans source fields. No business logic.
+- **Intermediate** — reusable business logic and joins (e.g. RFM scoring, delivery-delay flags), built once so it isn't duplicated across marts.
+- **Marts** — the final analytical interface, modelled around business questions rather than the original CSV structure. This is the only layer Power BI queries.
 
 ---
 
-## 2. Data Warehouse — Snowflake
-
-Snowflake is used as the central analytical data warehouse.
-
-The data stored in Amazon S3 is made available to Snowflake and forms the foundation for downstream transformations.
-
-```text
-Amazon S3
-    │
-    ▼
-Snowflake
-    │
-    ▼
-Raw Tables
-```
-
-This creates a clear separation between the raw storage layer and the analytical warehouse.
-
----
-
-## 3. Transformation — dbt
-
-dbt is responsible for transforming raw Snowflake data into structured, business-ready analytical models.
-
-The dbt project follows a three-layer transformation architecture:
-
-```text
-Raw
- │
- ▼
-Staging
- │
- ▼
-Intermediate
- │
- ▼
-Marts
-```
-
----
-
-## 🧹 Staging Layer
-
-The staging layer provides source-level preparation and standardisation.
-
-Typical responsibilities include:
-
-* Standardising column names
-* Casting data types
-* Cleaning source fields
-* Creating consistent source-level models
-* Preparing raw data for downstream transformations
-
-```text
-Raw Source Tables
-       │
-       ▼
-Staging Models
-```
-
----
-
-## 🔧 Intermediate Layer
-
-The intermediate layer contains reusable transformation and business logic.
-
-This layer combines and enriches staging models before they are exposed to business users.
-
-```text
-Staging Models
-       │
-       ▼
-Intermediate Models
-       │
-       ▼
-Business Logic
-```
-
-The purpose of this layer is to avoid duplicating complex transformation logic across multiple downstream models.
-
----
-
-## 📊 Marts Layer
-
-The marts layer provides the final analytical interface for reporting.
-
-These models are designed around business questions rather than the structure of the original CSV files.
-
-```text
-Intermediate Models
-       │
-       ▼
-Business Marts
-       │
-       ▼
-Power BI
-```
-
-The marts are the primary data source for the Power BI reporting layer.
-
----
 
 # 🧱 Data Modelling
+
 
 The project separates raw source structures from the analytical models consumed by Power BI.
 
@@ -298,17 +179,31 @@ Potential data quality checks include:
 Data quality checks implemented within the project are documented in the dbt project.
 
 
-# 🔮 Future Improvements
+## 🛠️ Technology Stack
 
-Potential extensions to the platform include:
+| Technology | Role |
+|---|---|
+| **Amazon S3** | Raw cloud data storage |
+| **Snowflake** | Cloud data warehouse |
+| **dbt** | Data transformation and modelling |
+| **SQL** | Transformation and analytical logic |
+| **Power BI** | Business intelligence and reporting |
 
-* Automated data ingestion
-* Pipeline orchestration
-* Incremental dbt models
-* CI/CD for dbt
-* Automated data quality monitoring
-* Pipeline observability and alerting
-* Infrastructure as Code
-* Automated Power BI dataset refreshes
+---
 
-These improvements would move the project further towards a production-oriented data platform.
+## 🔮 Future Improvements
+
+- Automated data ingestion and pipeline orchestration
+- Incremental dbt models
+- CI/CD for dbt
+- Automated data quality monitoring and alerting
+- Infrastructure as Code
+- Automated Power BI dataset refreshes
+
+---
+
+## 👤 About
+
+Built to demonstrate practical experience with modern cloud data engineering and analytics workflows: cloud storage, data warehousing, ELT architecture, dbt modelling, business intelligence, and stakeholder-ready reporting.
+
+**Core architecture:** Amazon S3 → Snowflake → dbt → Power BI
