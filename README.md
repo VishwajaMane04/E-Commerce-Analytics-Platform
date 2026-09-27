@@ -85,44 +85,20 @@ The project separates raw source structures from the analytical models consumed 
 
 ![Data Model](docs/data_model.png)
 
-
-# 📊 Analytics Layer — Power BI
+## 📊 Analytics Layer — Power BI
 
 The curated dbt marts are consumed by Power BI to provide business-facing analytics.
 
 The project contains **four Power BI reports**, covering different analytical perspectives of the Olist marketplace.
 
----
+📎 **[View Full Power BI Report (PDF)](powerbi/Olist_PowerBI_Reports.pdf)**
 
-## 📈 Report 01 — Executive Analytics
-
-Provides a high-level view of marketplace performance and key business metrics.
-
-![Executive Dashboard](docs/dashboards/executive.png)
-
----
-
-## 🛒 Report 02 — Sales & Product Analytics
-
-Provides analysis of sales activity, products, categories, and revenue performance.
-
-![Sales Dashboard](docs/dashboards/sales.png)
-
----
-
-## 👥 Report 03 — Customer Analytics
-
-Provides insight into customer behaviour, distribution, and geographic patterns.
-
-![Customer Dashboard](docs/dashboards/customers.png)
-
----
-
-## 🚚 Report 04 — Operations & Marketing Analytics
-
-Brings together operational and marketing perspectives to support analysis of marketplace performance.
-
-![Operations Dashboard](docs/dashboards/operations.png)
+| Report | Focus |
+|---|---|
+| 📈 **01 — Sales & Commercial Performance** | Revenue drivers, top categories, sellers and regions |
+| 👥 **02 — Customer Intelligence** | Customer behaviour, value and RFM segmentation |
+| 🛒 **03 — Marketing & Acquisition** | Channel performance and customer acquisition value |
+| 🚚 **04 — Customer Experience** | Delivery performance, reviews, and revenue impact |
 
 # 🎤 Stakeholder Presentation
 
